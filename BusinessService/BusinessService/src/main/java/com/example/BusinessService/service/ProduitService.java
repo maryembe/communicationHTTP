@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.cache.annotation.Cacheable;
 
+import java.util.List;
+
 
 @Service
 public class ProduitService {
@@ -18,6 +20,18 @@ public class ProduitService {
         System.out.println("Sending request to ReferentielService to create product: " + produit);
         // Call the ProduitClient to create the product in ReferentielService
         Produit newProduit = produitClient.createProduit(produit);
+
+        // Log the response from ReferentielService
+        System.out.println("Received response from ReferentielService: " + newProduit);
+
+        return newProduit;
+    }
+    @Cacheable(value = "productsCache")
+    public List<Produit> GetAllProduit() {
+        // Log the outgoing request to ReferentielService
+        System.out.println("Sending request to ReferentielService to get all product: " );
+        // Call the ProduitClient to create the product in ReferentielService
+        List<Produit> newProduit = produitClient.getProduit();
 
         // Log the response from ReferentielService
         System.out.println("Received response from ReferentielService: " + newProduit);
